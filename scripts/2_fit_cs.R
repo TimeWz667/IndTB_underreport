@@ -5,14 +5,6 @@ options(mc.cores = 4)
 rstan_options(auto_write = TRUE)
 
 
-library(tidyverse)
-library(rstan)
-
-
-options(mc.cores = 4)
-rstan_options(auto_write = TRUE)
-
-
 ## Data loading
 
 targets <- read_csv(here::here("data", "targets_india.csv"))
