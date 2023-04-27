@@ -61,7 +61,7 @@ for(src_model in c("cs_11.stan")) {
     as.tibble() %>% 
     mutate(
       ppv_pub = ds$ppv_pub,
-      ent_pub = ds$entpub,
+      ent_pub = ds$ent_pub,
       pdx_pub = ds$pdx_pub
     )
   
