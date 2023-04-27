@@ -28,3 +28,6 @@ vignettes/*.pdf
 
 .idea/
 out/
+.config/
+.local/
+
