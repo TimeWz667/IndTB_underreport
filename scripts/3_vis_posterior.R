@@ -81,7 +81,7 @@ post <- bind_rows(lapply(c("tx_00", "tx_10", "tx_01", "tx_11"), function(folder)
 
 post %>% 
   ggplot() +
-  geom_point(aes(x = ppv_pri, y = ppm, colour = Scenario), alpha = 0.2) +
+  geom_point(aes(x = ppv_pri, y = dur_pri, colour = Scenario), alpha = 0.2) +
   facet_wrap(.~Scenario)
 
 
