@@ -43,7 +43,7 @@ ds <- list(
 for(src_model in c("tx_00.stan", "tx_10.stan", "tx_01.stan", "tx_11.stan")) {
   model <- rstan::stan_model(here::here("stan", src_model))
   
-  post <- rstan::sampling(model, data=ds, iter=5e3, warmup=4e3)
+  post <- rstan::sampling(model, data=ds, iter=5e4, warmup=5e4-1000)
   
   tab <- as.data.frame(summary(post)$summary)
   tab$Name <- rownames(tab)
@@ -63,7 +63,6 @@ for(src_model in c("tx_00.stan", "tx_10.stan", "tx_01.stan", "tx_11.stan")) {
   write_csv(tab, file = here::here("out", folder, "summary.csv"))
   write_csv(ext, file = here::here("out", folder, "post.csv"))
 }
-
 
 
 
