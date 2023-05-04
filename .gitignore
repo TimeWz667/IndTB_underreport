@@ -13,4 +13,5 @@ vignettes/*.pdf
 out/
 .config/
 .local/
+stan/*.rds
 
