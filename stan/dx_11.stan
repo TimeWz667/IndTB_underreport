@@ -69,9 +69,9 @@ model {
     
   target += binomial_lpmf(N_Txi_Pub | N_Det_Pub, p_txi_pub);
   target += binomial_lpmf(N_Txi_Eng | N_Det_Eng, p_txi_eng);
-    
-  target += binomial_lpmf(N_Det_Pub | Pop, det_pub);
-  target += binomial_lpmf(N_Det_Eng | Pop, det_eng);
+
+  target += binomial_lpmf(N_Det_Pub | Pop, det_pub / ppv_pub);
+  target += binomial_lpmf(N_Det_Eng | Pop, det_eng / ppv_eng);
   
   target += binomial_lpmf(Tx_Pub | Tx, p_pub);
   
