@@ -23,7 +23,7 @@ parameters {
   
   real<lower=0.2, upper=ppv_pub> ppv_pri;
   
-  real<lower=0.04166667, upper=2> dur_pri;
+  real<lower=0.04166667, upper=3> dur_pri;
   real<lower=0, upper=1> p_pri_on_pub;
   
   real<lower=0, upper=0.1> det_pub;

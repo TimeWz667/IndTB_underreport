@@ -38,7 +38,7 @@ ds <- list(
   Drug_Std = drug$Error,
   ppv_pub = 0.85,
   ent_pub = 0.483,
-  pdx_pub = 0.65
+  pdx_pub = 0.75
 )
 
 

@@ -20,8 +20,7 @@ parameters {
   real<lower=0, upper=0.1> txi_pub;
   real<lower=0, upper=0.1> txi_eng;
   
-  
-  real<lower=0.04166667, upper=2> dur_pri;
+  real<lower=0.04166667, upper=3> dur_pri;
   real<lower=0, upper=1> p_pri_on_pub;
 }
 transformed parameters {
@@ -51,8 +50,8 @@ model {
 
   p_pri_on_pub ~ beta(1.5, 3.5);
     
-  target += binomial_lpmf(N_Txi_Pub | Pop, txi_pub);
-  target += binomial_lpmf(N_Txi_Eng | Pop, txi_eng);
+  target += binomial_lpmf(N_Txi_Pub | Pop, txi_pub / ppv_pub);
+  target += binomial_lpmf(N_Txi_Eng | Pop, txi_eng / ppv_eng);
   
   //target += binomial_lpmf(Tx_Pub | Tx, p_pub);
   

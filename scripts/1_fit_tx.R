@@ -33,7 +33,7 @@ ds <- list(
   Tx_Pub = tx$X,
   Drug = drug$M,
   Drug_Std = drug$Error,
-  ppv_pub = 0.85
+  ppv_pub = 0.75
 )
 
 
@@ -43,7 +43,7 @@ ds <- list(
 for(src_model in c("tx_00.stan", "tx_10.stan", "tx_01.stan", "tx_11.stan")) {
   model <- rstan::stan_model(here::here("stan", src_model))
   
-  post <- rstan::sampling(model, data=ds, iter=5e4, warmup=5e4-1000)
+  post <- rstan::sampling(model, data=ds, iter=2e4, warmup=2e4-1000)
   
   tab <- as.data.frame(summary(post)$summary)
   tab$Name <- rownames(tab)
@@ -54,7 +54,7 @@ for(src_model in c("tx_00.stan", "tx_10.stan", "tx_01.stan", "tx_11.stan")) {
     as.tibble() %>% 
     mutate(
       ppv_pub = ds$ppv_pub,
-      ent_pub = ds$entpub,
+      ent_pub = ds$ent_pub,
       pdx_pub = ds$pdx_pub
     )
   

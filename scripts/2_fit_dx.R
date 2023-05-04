@@ -37,7 +37,7 @@ ds <- list(
   Tx_Pub = tx$X,
   Drug = drug$M,
   Drug_Std = drug$Error,
-  ppv_pub = 0.85
+  ppv_pub = 0.75
 )
 
 
