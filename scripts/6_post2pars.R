@@ -39,8 +39,8 @@ js <- list(
   txo = txo
 )
 
-dir.create(here::here("out", "pars"), showWarnings = F)
+dir.create(here::here("docs", "pars"), showWarnings = F)
 
-jsonlite::write_json(js, here::here("out", "pars", "pars_India.json"), digits = 8, auto_unbox = T)
+jsonlite::write_json(js, here::here("docs", "pars", "pars_India.json"), digits = 8, auto_unbox = T)
 
 
