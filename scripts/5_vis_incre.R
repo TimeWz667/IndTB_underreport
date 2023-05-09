@@ -3,17 +3,7 @@ library(tidybayes)
 
 theme_set(theme_bw() + theme(text = element_text(family = "sans")))
 
-
-post <- bind_rows(lapply(c("tx_00", "tx_01", "tx_11", "dx_11", "cs_11"), function(folder) {
-  read_csv(here::here("out", folder, "post.csv")) %>% 
-    select(ppm, dur_pri, ppv_pri, p_pri_on_pub, p_under,
-           tp_pri_drug, tp_pri_drug_time, tp_pri_txi) %>% 
-    mutate(Scenario = folder)
-})) %>% 
-  mutate(
-    Scenario = factor(Scenario, c("tx_00", "tx_01", "tx_11", "dx_11", "cs_11"))
-  )
-
+load(here::here("docs", "tabs", "post_incre.rdata"))
 
 
 g_p_under <- post %>% 

@@ -1,45 +1,13 @@
+if ("rstan" %in% (.packages())) {
+  detach("package:rstan", unload = T)
+}
 library(tidyverse)
 library(tidybayes)
 
 theme_set(theme_bw() + theme(text = element_text(family = "sans")))
 
 
-locs <- local({
-  locs <- dir(here::here("out", "tx_11_subnational"))
-  locs <- locs[startsWith(locs, "post_")]
-  locs <- gsub("post_", "", locs)
-  locs <- gsub(".csv", "", locs)
-  tars <- bind_rows(lapply(locs, function(loc) {
-    read_csv(here::here("data", "targets_" + glue::as_glue(loc) + ".csv")) %>%
-      filter(Index == "PrTxiPub")
-  })) %>% filter(Std > 0 & N > 5)
-  
-  locs <- locs[locs %in% (tars %>% pull(State))]
-  
-  locs
-})
-
-
-locs
-
-
-pop <- read_csv(here::here("data", "Population.csv")) %>% 
-  filter(Sex == "Total" & Year == 2019) %>% 
-  select(State = Location, Pop)
-
-
-post <- bind_rows(lapply(locs, function(loc) {
-  read_csv(here::here("out", "tx_11_subnational", "post_" + glue::as_glue(loc) +".csv")) %>% 
-    select(ppm, dur_pri, ppv_pri, p_pri_on_pub, p_under,
-           tp_pri_drug, tp_pri_drug_time, tp_pri_txi) %>% 
-    mutate(State = loc)
-}))%>% 
-  mutate(
-    State = gsub("_", " ", State)
-  ) %>% 
-  left_join(pop) 
-
-pop
+load(file = here::here("docs", "tabs", "post_subnational.rdata"))
 
 
 stats <- post %>% 
@@ -56,32 +24,6 @@ stats <- post %>%
   ) %>% 
   ungroup()
 
-
-post %>% 
-  mutate(
-    State = reorder(State, ppm)
-  ) %>% 
-  ggplot() +
-  stat_halfeye(aes(x = ppm, y = State)) +
-  expand_limits(x = c(0, 1))
-
-
-post %>% 
-  mutate(
-    State = reorder(State, dur_pri)
-  ) %>% 
-  ggplot() +
-  stat_halfeye(aes(x = dur_pri, y = State)) +
-  expand_limits(x = c(0, 2))
-
-
-post %>% 
-  mutate(
-    State = reorder(State, p_under)
-  ) %>% 
-  ggplot() +
-  stat_halfeye(aes(x = p_under, y = State)) +
-  expand_limits(x = c(0, 1))
 
 
 stats %>% 
@@ -195,6 +137,5 @@ ggsave(g_drugT, filename = here::here("docs", "figs", "g_sn_drugt.png"), width =
 ggsave(g_txi, filename = here::here("docs", "figs", "g_sn_txi.png"), width = 6, height = 5)
 ggsave(g_under, filename = here::here("docs", "figs", "g_sn_under.png"), width = 6, height = 5)
 ggsave(g_priunder, filename = here::here("docs", "figs", "g_sn_priunder.png"), width = 6, height = 5)
-
 
 

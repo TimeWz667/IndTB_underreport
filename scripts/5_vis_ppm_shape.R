@@ -4,18 +4,7 @@ library(tidybayes)
 theme_set(theme_bw() + theme(text = element_text(family = "sans")))
 
 
-
-ds <- dir(here::here("out", "sens_ppm_shape"))
-ds <- ds[startsWith(ds, "post_")]
-
-
-post <- bind_rows(lapply(ds, function(file) {
-  read_csv(here::here("out", "sens_ppm_shape", file)) %>% 
-    select(ppm, dur_pri, ppv_pri, p_pri_on_pub, 
-           tp_pri_drug, tp_pri_drug_time, tp_pri_txi) %>% 
-    mutate(Scenario = file)
-})) %>% 
-  extract(Scenario, "PPM_avg", "post_(\\S+).csv", convert=T)
+load(here::here("docs", "tabs", "post_ppm_shape.rdata"))
 
 
 
