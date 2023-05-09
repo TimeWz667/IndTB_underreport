@@ -9,7 +9,7 @@ Investigate the burden of India TB case under-reporting in the private  sector
 - **Data**: 
   - National TB prevalence survey, India, 2019-2021
   - Nikshay data: case-notification by public/private sectors
-  - Drug sale data for matching anti-TB reatments
+  - Drug sale data for matching anti-TB treatments
 - **Language**: R with stan
 
 
