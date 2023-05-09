@@ -4,7 +4,7 @@ library(tidyverse)
 
 set.seed(11667)
 
-n_sample <- 300
+n_sample <- 500
 
 post <- read_csv(here::here("out", "cs_11", "post.csv"))
 
