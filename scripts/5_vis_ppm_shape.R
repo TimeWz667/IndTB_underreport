@@ -7,7 +7,6 @@ theme_set(theme_bw() + theme(text = element_text(family = "sans")))
 load(here::here("docs", "tabs", "post_ppm_shape.rdata"))
 
 
-
 g_ppm <- post %>% 
   ggplot() + 
   stat_halfeye(aes(x = ppm, fill = as.factor(PPM_avg)), alpha = 0.7) + 

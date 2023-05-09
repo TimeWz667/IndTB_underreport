@@ -29,9 +29,6 @@ txo <- tar %>%
 
 
 
-prev
-
-
 
 js <- list(
   pars = sel,

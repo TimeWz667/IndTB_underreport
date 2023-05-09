@@ -2,39 +2,53 @@
 Investigate the burden of India TB case under-reporting in the private  sector
 
 
-### Model details
 
-- 
+### Settings
 
-
-#### Baseline model
-<a href="url"><img src="docs/figs/diag_model.png" align="center" width="70%" ></a>
-
-#### ACF algorithms
-<a href="url"><img src="docs/figs/diag_acf.png" align="center" width="70%" ></a>
-
-
-### Results: current implemented ACFs
-
-<a href="url"><img src="docs/figs/g_bg_acf_combine.png" align="center" width="70%" ></a>
-
-<a href="url"><img src="docs/figs/g_bg_acf_ce.png" align="center" width="70%" ></a>
-
-### Results: vulnerable-led ACFs
-<a href="url"><img src="docs/figs/g_vul_costimp_ci.png" align="center" width="70%" ></a>
-
-<a href="url"><img src="docs/figs/g_vul_covimp_ci.png" align="center" width="70%" ></a>
+- **Locations**: India and state-level data
+- **Data**: 
+  - National TB prevalence survey, India, 2019-2021
+  - Nikshay data: case-notification by public/private sectors
+  - Drug sale data for matching anti-TB reatments
+- **Language**: R with stan
 
 
-### Results: ACFs with follow-up screening
-<a href="url"><img src="docs/figs/g_fudur_cost.png" align="center" width="70%" ></a>
+
+## Posterior distribution of main results
+
+### National level
+<a href="url"><img src="docs/figs/g_post_case.png" align="center" width="70%" ></a>
 
 
-### Appendix:
-#### Goodness of fit
-<a href="url"><img src="docs/figs/g_tofit.png" align="center" width="70%" ></a>
+### State level
 
-#### Single variable sensitivity analysis
-<a href="url"><img src="docs/figs/g_sens_par.png" align="center" width="70%" ></a>
+<a href="url"><img src="docs/figs/g_sn_txi.png" align="center" width="70%" ></a>
+
+<a href="url"><img src="docs/figs/g_sn_under.png" align="center" width="70%" ></a>
+
+
+
+## Posterior distribution of key parameters 
+
+<a href="url"><img src="docs/figs/g_post.png" align="center" width="70%" ></a>
+
+
+## Sensitivity analysis
+
+### The lower bound of PPM level
+
+<a href="url"><img src="docs/figs/g_sens_ppmlb.png" align="center" width="70%" ></a>
+
+
+### The shape of PPM level
+
+<a href="url"><img src="docs/figs/g_sens_ppmavg.png" align="center" width="70%" ></a>
+
+
+### Entry point of modelling
+
+<a href="url"><img src="docs/figs/g_sens_incre_under.png" align="center" width="40%" ></a>
+
+
 
 

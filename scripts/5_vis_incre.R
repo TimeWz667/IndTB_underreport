@@ -17,20 +17,6 @@ g_p_under <- post %>%
 g_p_under
 
 
-ggsave(g_p_under, filename=here::here("docs", "figs", "incr_p_under.png"), width=4, height=5)
-
-
-
-post %>% 
-  ggplot() +
-  geom_point(aes(x = dur_pri, y = p_under)) +
-  facet_wrap(.~Scenario)
-
-
-
-post %>% 
-  ggplot() +
-  geom_point(aes(x = dur_pri, y = ppv_pri)) +
-  facet_wrap(.~Scenario)
+ggsave(g_p_under, filename=here::here("docs", "figs", "g_sens_incre_under.png"), width=4, height=5)
 
 
