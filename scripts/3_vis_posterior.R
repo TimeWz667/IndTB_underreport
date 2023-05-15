@@ -79,13 +79,14 @@ post01 <- post %>%
 g_cross <- post01 %>% 
   filter(Scenario != "Prior distribution") %>% 
   ggplot() +
-  geom_rect(xmin=1 / 24, xmax=3, ymin=0.2, ymax=0.75, alpha = 0.01, 
+  geom_rect(xmin=1 / 24, xmax=1, ymin=0.2, ymax=0.75, alpha = 0.01, 
             linetype = 2, fill = NA,
             aes(colour = "Prior distribution")) +
   geom_point(aes(x = dur_pri, y = ppv_pri, colour = Scenario), alpha = 0.4, position = "identity") +
   scale_x_continuous("Treatment period, private providers, month", labels = scales::number_format(scale = 12))  +
   scale_y_continuous("Positive predictive value, private sector, %", labels = scales::percent) +
-  scale_color_discrete("")
+  scale_color_discrete("") +
+  expand_limits(x = 0)
 
 g_cross
 
@@ -94,7 +95,7 @@ g_ppv <- post01 %>%
   ggplot() +
   # geom_rect(xmin=0.2, xmax=0.85, ymin=0, ymax= 0.5 / (0.85 - 0.2), alpha = 0.01, 
   #           colour = "black", linetype = 2, fill = NA) +
-  geom_vline(xintercept = c(0.2, 0.85), linetype = 2) + 
+  geom_vline(xintercept = c(0.2, 0.75), linetype = 2) + 
   stat_halfeye(aes(x = ppv_pri, fill = Scenario), alpha = 0.4, position = "identity") +
   scale_x_continuous("Positive predictive value, private sector, %", labels = scales::percent) +
   scale_y_continuous("Probability density") +
@@ -109,7 +110,7 @@ g_dur <- post01 %>%
   ggplot() +
   # geom_rect(xmin=1 / 24, xmax=2, ymin=0, ymax= 0.5 / (2 - 1 / 24), alpha = 0.01, 
   #           colour = "black", linetype = 2, fill = NA) +
-  geom_vline(xintercept = c(1 / 24, 3), linetype = 2) + 
+  geom_vline(xintercept = c(1 / 24, 1), linetype = 2) + 
   stat_halfeye(aes(x = dur_pri, fill = Scenario), alpha = 0.4, position = "identity") +
   scale_x_continuous("Treatment period, private providers, month", labels = scales::number_format(scale = 12)) +
   scale_y_continuous("Probability density") +
