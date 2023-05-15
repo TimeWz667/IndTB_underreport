@@ -14,4 +14,3 @@ out/
 .config/
 .local/
 stan/*.rds
-
