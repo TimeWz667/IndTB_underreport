@@ -33,7 +33,7 @@ locs <- local({
   locs <- gsub("post_", "", locs)
   locs <- gsub(".csv", "", locs)
   tars <- bind_rows(lapply(locs, function(loc) {
-    read_csv(here::here("data", "targets_" + glue::as_glue(loc) + ".csv")) %>%
+    read_csv(here::here("data", "targets_State_" + glue::as_glue(loc) + ".csv")) %>%
       filter(Index == "PrTxiPub")
   })) %>% filter(Std > 0 & N > 5)
   
@@ -64,9 +64,44 @@ write_csv(post, here::here("docs", "tabs", "post_subnational.csv"))
 save(post, file = here::here("docs", "tabs", "post_subnational.rdata"))
 
 
+# Regional
+
+locs <- local({
+  locs <- dir(here::here("out", "tx_11_regional"))
+  locs <- locs[startsWith(locs, "post_")]
+  locs <- gsub("post_", "", locs)
+  locs <- gsub(".csv", "", locs)
+  tars <- bind_rows(lapply(locs, function(loc) {
+    read_csv(here::here("data", "targets_Region_" + glue::as_glue(loc) + ".csv")) %>%
+      filter(Index == "PrTxiPub")
+  })) %>% filter(Std > 0 & N > 5)
+  
+  locs <- locs[locs %in% (tars %>% pull(Region))]
+  
+  locs
+})
+
+
+pop <- read_csv(here::here("data", "Population_region.csv"))
+
+
+post <- bind_rows(lapply(locs, function(loc) {
+  read_csv(here::here("out", "tx_11_regional", "post_" + glue::as_glue(loc) +".csv")) %>% 
+    select(ppm, dur_pri, ppv_pri, p_pri_on_pub, p_under,
+           tp_pri_drug, tp_pri_drug_time, tp_pri_txi) %>% 
+    mutate(Region = loc)
+}))%>% 
+  mutate(
+    Region = gsub("_", " ", Region)
+  ) %>% 
+  left_join(pop) 
+
+
+write_csv(post, here::here("docs", "tabs", "post_regional.csv"))
+save(post, file = here::here("docs", "tabs", "post_regional.rdata"))
+
 
 # Sens, PPM
-
 
 ds <- dir(here::here("out", "sens_ppm_lo"))
 ds <- ds[startsWith(ds, "post_")]

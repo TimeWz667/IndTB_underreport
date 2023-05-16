@@ -9,10 +9,9 @@ rstan_options(auto_write = TRUE)
 
 pop <- local({
   locs <- dir("data")
-  locs <- locs[startsWith(locs, "targets_")]
-  locs <- gsub("targets_", "", locs)
+  locs <- locs[startsWith(locs, "targets_State")]
+  locs <- gsub("targets_State_", "", locs)
   locs <- gsub(".csv", "", locs)
-  locs <- locs[locs != "india"]
   locs
   
   
@@ -35,7 +34,7 @@ pop <- local({
 
 data_locs <- lapply(names(pop), function(loc) {
   
-  targets <- read_csv(here::here("data", "targets_" + glue::as_glue(loc) + ".csv"))
+  targets <- read_csv(here::here("data", "targets_State_" + glue::as_glue(loc) + ".csv"))
   
   drug <- targets %>% filter(Index == "DrugTime")
   tx <- targets %>% filter(Index == "PrTxiPub") %>% 
