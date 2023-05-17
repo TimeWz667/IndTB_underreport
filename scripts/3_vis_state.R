@@ -99,7 +99,7 @@ g_txi <- post %>%
   ) %>% 
   ggplot() +
   stat_halfeye(aes(x = tp_pri_txi / Pop, y = State)) +
-  scale_x_continuous("Unreported private cases, per 100,000", labels=scales::number_format(scale = 1e5), limits = c(0, 2e-3)) + 
+  scale_x_continuous("Unreported number with TB initiating private treatment, \nper 100,000", labels=scales::number_format(scale = 1e5), limits = c(0, 2e-3)) + 
   expand_limits(x = 0)
 
 g_txi
@@ -124,18 +124,26 @@ g_priunder <- post %>%
   ggplot() +
   stat_halfeye(aes(x = 1 - ppm, y = State)) +
   #geom_pointinterval(aes(x = M, xmin = L2, xmax = U2, y = State)) + 
-  scale_x_continuous("Unreported private cases / All private cases initiated treatment, %", labels=scales::percent) + 
+  scale_x_continuous("Of people with TB treated by private sector, \nproportion not notified", labels=scales::percent) + 
   expand_limits(x = 0:1)
 
 g_priunder
 
 
-ggsave(g_ppv_pri, filename = here::here("docs", "figs", "g_sn_ppv.png"), width = 6, height = 5)
-ggsave(g_dur_pri, filename = here::here("docs", "figs", "g_sn_dur.png"), width = 6, height = 5)
-ggsave(g_drug, filename = here::here("docs", "figs", "g_sn_drug.png"), width = 6, height = 5)
-ggsave(g_drugT, filename = here::here("docs", "figs", "g_sn_drugt.png"), width = 6, height = 5)
-ggsave(g_txi, filename = here::here("docs", "figs", "g_sn_txi.png"), width = 6, height = 5)
-ggsave(g_under, filename = here::here("docs", "figs", "g_sn_under.png"), width = 6, height = 5)
-ggsave(g_priunder, filename = here::here("docs", "figs", "g_sn_priunder.png"), width = 6, height = 5)
+g_bind_under <- ggpubr::ggarrange(
+  g_txi + labs(subtitle = "(A)"), 
+  g_priunder + labs(subtitle = "(B)"), 
+  common.legend = T, legend = "bottom")
+
+g_bind_under
+
+ggsave(g_ppv_pri, filename = here::here("docs", "figs", "g_st_ppv.png"), width = 6, height = 5)
+ggsave(g_dur_pri, filename = here::here("docs", "figs", "g_st_dur.png"), width = 6, height = 5)
+ggsave(g_drug, filename = here::here("docs", "figs", "g_st_drug.png"), width = 6, height = 5)
+ggsave(g_drugT, filename = here::here("docs", "figs", "g_st_drugt.png"), width = 6, height = 5)
+ggsave(g_txi, filename = here::here("docs", "figs", "g_st_txi.png"), width = 6, height = 5)
+ggsave(g_under, filename = here::here("docs", "figs", "g_st_under.png"), width = 6, height = 5)
+ggsave(g_priunder, filename = here::here("docs", "figs", "g_st_priunder.png"), width = 6, height = 5)
+ggsave(g_bind_under, filename = here::here("docs", "figs", "g_st_bunder.png"), width = 9, height = 6)
 
 

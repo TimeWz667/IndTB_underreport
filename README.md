@@ -22,9 +22,12 @@ Investigate the burden of India TB case under-reporting in the private  sector
 
 ### State level
 
-<a href="url"><img src="docs/figs/g_sn_txi.png" align="center" width="70%" ></a>
+<a href="url"><img src="docs/figs/g_st_bunder.png" align="center" width="70%" ></a>
 
-<a href="url"><img src="docs/figs/g_sn_under.png" align="center" width="70%" ></a>
+
+### Region level
+
+<a href="url"><img src="docs/figs/g_rg_bunder.png" align="center" width="70%" ></a>
 
 
 

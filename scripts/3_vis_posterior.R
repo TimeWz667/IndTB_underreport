@@ -68,8 +68,8 @@ post01 <- post %>%
     Scenario == "Drug sales data alone" | Scenario == "Drug sales + prevalence survey data"
   ) %>% 
   mutate(
-    Scenario = ifelse(Scenario == "Drug sales data alone", Scenario, "With prevalence survey data"),
-    Scenario = factor(Scenario, levels = c("Prior distribution", "Drug sales data alone", "With prevalence survey data"))
+    Scenario = ifelse(Scenario == "Drug sales data alone", "Drug sales data only", "Drug sales with TBPS"),
+    Scenario = factor(Scenario, levels = c("Prior distribution", "Drug sales data only", "Drug sales with TBPS"))
   )
 
 
@@ -83,8 +83,8 @@ g_cross <- post01 %>%
             linetype = 2, fill = NA,
             aes(colour = "Prior distribution")) +
   geom_point(aes(x = dur_pri, y = ppv_pri, colour = Scenario), alpha = 0.4, position = "identity") +
-  scale_x_continuous("Treatment period, private providers, month", labels = scales::number_format(scale = 12))  +
-  scale_y_continuous("Positive predictive value, private sector, %", labels = scales::percent) +
+  scale_x_continuous("Average duration of first-line treatment, private sector (months)", labels = scales::number_format(scale = 12))  +
+  scale_y_continuous("Positive predictive value, private sector diagnosis", labels = scales::percent) +
   scale_color_discrete("") +
   expand_limits(x = 0)
 
@@ -97,7 +97,7 @@ g_ppv <- post01 %>%
   #           colour = "black", linetype = 2, fill = NA) +
   geom_vline(xintercept = c(0.2, 0.75), linetype = 2) + 
   stat_halfeye(aes(x = ppv_pri, fill = Scenario), alpha = 0.4, position = "identity") +
-  scale_x_continuous("Positive predictive value, private sector, %", labels = scales::percent) +
+  scale_x_continuous("Positive predictive value, private sector diagnosis", labels = scales::percent) +
   scale_y_continuous("Probability density") +
   scale_fill_discrete("") +
   guides(fill = guide_legend(reverse = F)) + 
@@ -112,7 +112,7 @@ g_dur <- post01 %>%
   #           colour = "black", linetype = 2, fill = NA) +
   geom_vline(xintercept = c(1 / 24, 1), linetype = 2) + 
   stat_halfeye(aes(x = dur_pri, fill = Scenario), alpha = 0.4, position = "identity") +
-  scale_x_continuous("Treatment period, private providers, month", labels = scales::number_format(scale = 12)) +
+  scale_x_continuous("Average duration of first-line treatment, private sector (months)", labels = scales::number_format(scale = 12)) +
   scale_y_continuous("Probability density") +
   scale_fill_discrete("") +
   guides(fill = guide_legend(reverse = F)) + 
@@ -123,7 +123,9 @@ g_dur
 
 
 
-g_post <- ggpubr::ggarrange(g_ppv, g_dur, common.legend = T, legend = "bottom")
+g_post <- ggpubr::ggarrange(g_ppv + labs(subtitle = "(A)"), 
+                  g_dur + labs(subtitle = "(B)"), 
+                  common.legend = T, legend = "bottom")
 
 
 g_post
@@ -133,7 +135,7 @@ g_post
 g_drugtime <- post01 %>% 
   ggplot() +
   stat_halfeye(aes(x = tp_pri_drug_time, fill = Scenario), alpha = 0.4, position = "identity") +
-  scale_x_continuous("million person-year", labels=scales::number_format(scale = 1e-6), limits = c(0, 3e6)) +
+  scale_x_continuous("million person-year", labels=scales::number_format(scale = 1e-6), limits = c(0, 1.5e6)) +
   scale_y_continuous("Probability density") +
   scale_fill_discrete("") +
   guides(fill = guide_legend(reverse = F)) + 
@@ -145,7 +147,7 @@ g_drugtime
 g_unreported <- post01 %>% 
   ggplot() +
   stat_halfeye(aes(x = tp_pri_txi, fill = Scenario), alpha = 0.4, position = "identity") +
-  scale_x_continuous("million", labels=scales::number_format(scale = 1e-6), limits = c(0, 3e6)) +
+  scale_x_continuous("Unreported number with TB initiating private treatment, \nmillion", labels=scales::number_format(scale = 1e-6), limits = c(0, 3e6)) +
   scale_y_continuous("Probability density") +
   scale_fill_discrete("") +
   guides(fill = guide_legend(reverse = F)) + 
@@ -154,9 +156,29 @@ g_unreported <- post01 %>%
 g_unreported
 
 
+g_priunder <- post01 %>% 
+  ggplot() +
+  stat_halfeye(aes(x = 1 - ppm, fill = Scenario), alpha = 0.4, position = "identity") +
+  #geom_pointinterval(aes(x = M, xmin = L2, xmax = U2, y = State)) + 
+  scale_x_continuous("Of people with TB treated by private sector, \nproportion not notified", labels=scales::percent) + 
+  scale_y_continuous("Probability density") +
+  expand_limits(x = 0:1) + 
+  theme(axis.text.y = element_blank())
+
+g_priunder
+
+
+g_bind_under <- ggpubr::ggarrange(
+  g_unreported + labs(subtitle = "(A)"), 
+  g_priunder + labs(subtitle = "(B)"), 
+  common.legend = T, legend = "bottom")
+
+g_bind_under
+
+
 g_attload <- ggpubr::ggarrange(
   g_drugtime + labs(subtitle = "(A) Caseloads with drugs from private providers"), 
-  g_unreported + labs(subtitle = "(B) Unreported private cases initiated treatment"), 
+  g_unreported + labs(subtitle = "(B) Number of non-notified people with TB initiating treatment in the private sector "), 
   common.legend = T, legend = "bottom")
 
 g_attload
@@ -169,3 +191,6 @@ ggsave(g_dur, filename = here::here("docs", "figs", "g_post_dur.png"), width = 6
 ggsave(g_post, filename = here::here("docs", "figs", "g_post.png"), width = 9, height = 6)
 ggsave(g_cross, filename = here::here("docs", "figs", "g_post_cross.png"), width = 9, height = 6)
 ggsave(g_attload, filename = here::here("docs", "figs", "g_post_case.png"), width = 9, height = 6)
+ggsave(g_bind_under, filename = here::here("docs", "figs", "g_post_under.png"), width = 9, height = 6)
+
+
