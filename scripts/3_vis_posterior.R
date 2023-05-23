@@ -158,9 +158,9 @@ g_unreported
 
 g_priunder <- post01 %>% 
   ggplot() +
-  stat_halfeye(aes(x = 1 - ppm, fill = Scenario), alpha = 0.4, position = "identity") +
+  stat_halfeye(aes(x = ppm, fill = Scenario), alpha = 0.4, position = "identity") +
   #geom_pointinterval(aes(x = M, xmin = L2, xmax = U2, y = State)) + 
-  scale_x_continuous("Of people with TB treated by private sector, \nproportion not notified", labels=scales::percent) + 
+  scale_x_continuous("Of people with TB treated by private sector, \nproportion non-notified", labels=scales::percent) + 
   scale_y_continuous("Probability density") +
   expand_limits(x = 0:1) + 
   theme(axis.text.y = element_blank())

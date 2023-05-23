@@ -39,6 +39,8 @@ g_dur <- post %>%
 
 
 g_bind <- ggpubr::ggarrange(g_ppv, g_dur, legend = "bottom", nrow=1, common.legend = T)
+
+g_bind
 ggsave(g_bind, filename = here::here("docs", "figs", "g_sens_ppmlb.png"), width = 9, height = 5)
 
 

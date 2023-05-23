@@ -111,7 +111,7 @@ g_txi_abs <- post %>%
   ) %>% 
   ggplot() +
   stat_halfeye(aes(x = tp_pri_txi, y = State)) +
-  scale_x_continuous("Unreported number with TB initiating private treatment, \n thousands", 
+  scale_x_continuous("Unreported number with TB initiating private treatment, \nthousands", 
                      labels=scales::number_format(scale = 1e-3), limits = c(0, 3e5)) + 
   expand_limits(x = 0)
 
@@ -167,7 +167,8 @@ g_bind_under
 
 g_bind_under_abs <- ggpubr::ggarrange(
   g_txi_abs + labs(subtitle = "(A)"), 
-  g_priunder + labs(subtitle = "(B)"), 
+  g_priunder + labs(subtitle = "(B)")  +
+    scale_y_discrete(position = "right"), 
   common.legend = T, legend = "bottom")
 
 g_bind_under_abs
@@ -175,7 +176,8 @@ g_bind_under_abs
 
 g_bind_under_labs <- ggpubr::ggarrange(
   g_txi_labs + labs(subtitle = "(A)"), 
-  g_priunder + labs(subtitle = "(B)"), 
+  g_priunder + labs(subtitle = "(B)")  +
+    scale_y_discrete(position = "right"), 
   common.legend = T, legend = "bottom")
 
 g_bind_under_labs

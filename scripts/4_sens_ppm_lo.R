@@ -41,7 +41,7 @@ ds <- list(
 
 ### Fitting ----
 
-model <- rstan::stan_model(here::here("stan", "tx_01_ppm.stan"))
+model <- rstan::stan_model(here::here("stan", "tx_11_ppm.stan"))
 
 folder <- "sens_ppm_lo"
 dir.create(here::here("out", folder), showWarnings = F)
