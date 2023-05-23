@@ -18,9 +18,10 @@ post01 <- post %>%
 post01 %>% 
   mutate(
     dur_pri = dur_pri * 12,
-    tp_pri_txi = tp_pri_txi  * 1e-6
+    tp_pri_txi = tp_pri_txi  * 1e-6,
+    fp_pri_txi = tp_pri_txi * (1 - ppv_pri) / ppv_pri
   ) %>% 
-  select(Scenario, dur_pri, ppv_pri, ppm, tp_pri_txi) %>% 
+  select(Scenario, dur_pri, ppv_pri, ppm, tp_pri_txi, fp_pri_txi) %>% 
   pivot_longer(-Scenario) %>% 
   group_by(Scenario, name) %>% 
   summarise(
@@ -29,6 +30,8 @@ post01 %>%
     U = quantile(value, 0.975),
     MLU = paste0(round(M, 2), " (", round(L, 2), ", ", round(U, 2), ")")
   )
+
+
 
 
 
