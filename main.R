@@ -17,10 +17,12 @@ source(here::here("scripts", "2_collect_post.R"))
 ## Visualisation
 
 source(here::here("scripts", "3_vis_posterior.R"))
-source(here::here("scripts", "3_vis_subnational.R"))
+source(here::here("scripts", "3_vis_state.R"))
+source(here::here("scripts", "3_vis_regional.R"))
 source(here::here("scripts", "5_vis_incre.R"))
 
-source(here::here("scripts", "5_vis_ppm.R"))
+source(here::here("scripts", "5_vis_ppm_lo.R"))
+source(here::here("scripts", "5_vis_ppm_shape.R"))
 
 
 
