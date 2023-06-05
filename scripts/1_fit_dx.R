@@ -14,7 +14,9 @@ targets %>%
   filter(Year == 2019) %>% data.frame()
 
 
-drug <- targets %>% filter(Index == "DrugTime")
+drug <- targets %>% filter(Index == "DrugTime") %>% 
+  filter(Year == 2019)
+
 tx <- targets %>% filter(Index == "PrTxiPub") %>% 
   mutate(X = round(M * N))
 

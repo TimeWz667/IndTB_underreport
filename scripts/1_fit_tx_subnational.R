@@ -36,7 +36,9 @@ data_locs <- lapply(names(pop), function(loc) {
   
   targets <- read_csv(here::here("data", "targets_State_" + glue::as_glue(loc) + ".csv"))
   
-  drug <- targets %>% filter(Index == "DrugTime")
+  drug <- targets %>% filter(Index == "DrugTime") %>% 
+    filter(Year == 2019)
+  
   tx <- targets %>% filter(Index == "PrTxiPub") %>% 
     mutate(X = round(M * N))
   
