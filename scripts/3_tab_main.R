@@ -19,9 +19,10 @@ post01 %>%
   mutate(
     dur_pri = dur_pri * 12,
     tp_pri_txi = tp_pri_txi  * 1e-6,
-    fp_pri_txi = tp_pri_txi * (1 - ppv_pri) / ppv_pri
+    fp_pri_txi = tp_pri_txi * (1 - ppv_pri) / ppv_pri,
+    under = 1 - ppm
   ) %>% 
-  select(Scenario, dur_pri, ppv_pri, ppm, tp_pri_txi, fp_pri_txi) %>% 
+  select(Scenario, dur_pri, ppv_pri, ppm, tp_pri_txi, fp_pri_txi, under) %>% 
   pivot_longer(-Scenario) %>% 
   group_by(Scenario, name) %>% 
   summarise(
@@ -42,9 +43,10 @@ states <- post  %>%
   mutate(
     dur_pri = dur_pri * 12,
     tp_pri_txi = tp_pri_txi * 1e5 / Pop,
+    fp_pri_txi = tp_pri_txi * (1 - ppv_pri) / ppv_pri,
     priunder = 1 - ppm
   ) %>% 
-  select(State, dur_pri, ppv_pri, ppm, priunder, tp_pri_txi) %>% 
+  select(State, dur_pri, ppv_pri, ppm, priunder, fp_pri_txi, tp_pri_txi) %>% 
   pivot_longer(-State) %>% 
   group_by(State, name) %>% 
   summarise(
@@ -58,6 +60,10 @@ states <- post  %>%
 
 states %>% 
   filter(name == "tp_pri_txi")
+
+states %>% 
+  filter(name == "fp_pri_txi")
+
 
 states %>% 
   filter(name == "priunder")
