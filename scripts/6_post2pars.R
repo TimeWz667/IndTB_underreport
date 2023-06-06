@@ -6,7 +6,7 @@ set.seed(11667)
 
 n_sample <- 500
 
-post <- read_csv(here::here("out", "cs_11", "post.csv"))
+post <- read_csv(here::here("out", "tx_11", "post.csv"))
 
 n_sample <- min(nrow(post), n_sample)
 
@@ -38,6 +38,6 @@ js <- list(
 
 dir.create(here::here("docs", "pars"), showWarnings = F)
 
-jsonlite::write_json(js, here::here("docs", "pars", "pars_India.json"), digits = 8, auto_unbox = T)
+jsonlite::write_json(js, here::here("docs", "pars", "pars_tx_India.json"), digits = 8, auto_unbox = T)
 
 
