@@ -42,7 +42,7 @@ jsonlite::write_json(js, here::here("docs", "pars", "pars_overall.json"), digits
 
 ## Regional level
 
-regions <- dir("out/tx_11_regional")
+regions <- dir("out/tx_11_region")
 regions <- regions[startsWith(regions, "post_")]
 regions <- gsub("post_", "", regions)
 regions <- gsub(".csv", "", regions)
@@ -84,7 +84,7 @@ for (reg in regions) {
 
 ## State level
 
-states <- dir("out/tx_11_subnational")
+states <- dir("out/tx_11_state")
 states <- states[startsWith(states, "post_")]
 states <- gsub("post_", "", states)
 states <- gsub(".csv", "", states)
@@ -93,7 +93,7 @@ states <- gsub(".csv", "", states)
 for (st in states) {
   st <- glue::as_glue(st)
   
-  post <- read_csv(here::here("out", "tx_11_subnational", "post_" + st + ".csv"))
+  post <- read_csv(here::here("out", "tx_11_state", "post_" + st + ".csv"))
   
   n_sample <- min(nrow(post), n_sample)
   sel <- post[sample.int(nrow(post), n_sample), ]
