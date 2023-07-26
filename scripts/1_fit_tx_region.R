@@ -81,7 +81,7 @@ names(data_locs) <- names(pop)
 src_model <- "tx_11.stan"
 model <- rstan::stan_model(here::here("stan", src_model))
 
-folder <- "tx_11_regional"
+folder <- "tx_11_region"
 dir.create(here::here("out", folder), showWarnings = F)
 
 for(loc in names(data_locs)) {

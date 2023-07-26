@@ -42,11 +42,12 @@ load(here::here("docs", "tabs", "post_subnational.rdata"))
 states <- post  %>% 
   mutate(
     dur_pri = dur_pri * 12,
+    n_tp_pri_txi = tp_pri_txi,
     tp_pri_txi = tp_pri_txi * 1e5 / Pop,
     fp_pri_txi = tp_pri_txi * (1 - ppv_pri) / ppv_pri,
     priunder = 1 - ppm
   ) %>% 
-  select(State, dur_pri, ppv_pri, ppm, priunder, fp_pri_txi, tp_pri_txi) %>% 
+  select(State, dur_pri, ppv_pri, ppm, priunder, fp_pri_txi, tp_pri_txi, n_tp_pri_txi) %>% 
   pivot_longer(-State) %>% 
   group_by(State, name) %>% 
   summarise(
@@ -56,6 +57,10 @@ states <- post  %>%
     MLU = paste0(round(M, 2), " (", round(L, 2), ", ", round(U, 2), ")")
   ) %>% 
   arrange(name)
+
+states %>% 
+  filter(name == "n_tp_pri_txi") %>% 
+  arrange(M)
 
 
 states %>% 

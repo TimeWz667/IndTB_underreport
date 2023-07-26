@@ -56,10 +56,10 @@ save(post, file = here::here("docs", "tabs", "post_ts.rdata"))
 
 
 
-# Sub-national
+# State level analysis
 
 locs <- local({
-  locs <- dir(here::here("out", "tx_11_subnational"))
+  locs <- dir(here::here("out", "tx_11_state"))
   locs <- locs[startsWith(locs, "post_")]
   locs <- gsub("post_", "", locs)
   locs <- gsub(".csv", "", locs)
@@ -80,7 +80,7 @@ pop <- read_csv(here::here("data", "Population.csv")) %>%
 
 
 post <- bind_rows(lapply(locs, function(loc) {
-  read_csv(here::here("out", "tx_11_subnational", "post_" + glue::as_glue(loc) +".csv")) %>% 
+  read_csv(here::here("out", "tx_11_state", "post_" + glue::as_glue(loc) +".csv")) %>% 
     select(ppm, dur_pri, ppv_pri, p_pri_on_pub, p_under,
            tp_pri_drug, tp_pri_drug_time, tp_pri_txi) %>% 
     mutate(State = loc)
@@ -91,14 +91,14 @@ post <- bind_rows(lapply(locs, function(loc) {
   left_join(pop) 
 
 
-write_csv(post, here::here("docs", "tabs", "post_subnational.csv"))
-save(post, file = here::here("docs", "tabs", "post_subnational.rdata"))
+write_csv(post, here::here("docs", "tabs", "post_state.csv"))
+save(post, file = here::here("docs", "tabs", "post_state.rdata"))
 
 
 # Regional
 
 locs <- local({
-  locs <- dir(here::here("out", "tx_11_regional"))
+  locs <- dir(here::here("out", "tx_11_region"))
   locs <- locs[startsWith(locs, "post_")]
   locs <- gsub("post_", "", locs)
   locs <- gsub(".csv", "", locs)
@@ -117,7 +117,7 @@ pop <- read_csv(here::here("data", "Population_region.csv"))
 
 
 post <- bind_rows(lapply(locs, function(loc) {
-  read_csv(here::here("out", "tx_11_regional", "post_" + glue::as_glue(loc) +".csv")) %>% 
+  read_csv(here::here("out", "tx_11_region", "post_" + glue::as_glue(loc) +".csv")) %>% 
     select(ppm, dur_pri, ppv_pri, p_pri_on_pub, p_under,
            tp_pri_drug, tp_pri_drug_time, tp_pri_txi) %>% 
     mutate(Region = loc)
@@ -128,6 +128,6 @@ post <- bind_rows(lapply(locs, function(loc) {
   left_join(pop) 
 
 
-write_csv(post, here::here("docs", "tabs", "post_regional.csv"))
-save(post, file = here::here("docs", "tabs", "post_regional.rdata"))
+write_csv(post, here::here("docs", "tabs", "post_region.csv"))
+save(post, file = here::here("docs", "tabs", "post_region.rdata"))
 

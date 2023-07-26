@@ -48,6 +48,8 @@ for(src_model in c("tx_00.stan", "tx_10.stan", "tx_01.stan", "tx_11.stan")) {
   
   post <- rstan::sampling(model, data=ds, iter=2e4, warmup=2e4-1000)
   
+  
+  
   tab <- as.data.frame(summary(post)$summary)
   tab$Name <- rownames(tab)
   tab <- tab %>% as_tibble() %>% relocate(Name)
@@ -63,6 +65,7 @@ for(src_model in c("tx_00.stan", "tx_10.stan", "tx_01.stan", "tx_11.stan")) {
   
   folder <- gsub(".stan", "", src_model)
   dir.create(here::here("out", folder), showWarnings = F)
+  save(post, file = here::here("out", folder, "post.rdata"))
   write_csv(tab, file = here::here("out", folder, "summary.csv"))
   write_csv(ext, file = here::here("out", folder, "post.csv"))
 }

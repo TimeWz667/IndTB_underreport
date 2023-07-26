@@ -7,7 +7,7 @@ library(tidybayes)
 theme_set(theme_bw() + theme(text = element_text(family = "sans")))
 
 
-load(file = here::here("docs", "tabs", "post_subnational.rdata"))
+load(file = here::here("docs", "tabs", "post_state.rdata"))
 
 
 stats <- post %>% 
