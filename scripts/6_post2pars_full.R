@@ -3,7 +3,7 @@ library(jsonlite)
 
 set.seed(11667)
 
-n_sample <- 500
+n_sample <- 2000
 
 dir.create(here::here("docs", "pars"), showWarnings = F)
 
