@@ -1,0 +1,29 @@
+State,StateGroup,Region,N_Private,N_PriOnPub,N_Txi_Pri
+India,India,India,,,593653
+Andhra Pradesh,Andhra_Pradesh,Southern,,,23821
+Arunachal Pradesh,North_Eastern_States,Northeastern,,,49
+Assam,North_Eastern_States,Northeastern,7399,3118,5227
+Bihar,Bihar,Eastern,,,45223
+Chandigarh,Punjab,Northern,308,270,63
+Chhattisgarh,Chhatisgarh,Central,100,22,10892
+Delhi,Delhi,Northern,100,35,17524
+Gujarat,Gujarat,Western,54186,10079,52707
+Haryana,Haryana,Northern,,,18577
+Himachal Pradesh,HP_UK_JK,Northern,1325,1007,952
+Jammu & Kashmir,HP_UK_JK,Northern,279,109,732
+Jharkhand,Jharkhand,Eastern,,,12651
+Karnataka,Karnataka,Southern,100,17,15167
+Kerala,Kerala,Southern,100,45,3246
+Madhya Pradesh,Madhya_Pradesh,Central,38386,9840,39279
+Maharashtra,Maharashtra,Western,,,70985
+Manipur,North_Eastern_States,Northeastern,,,363
+Meghalaya,North_Eastern_States,Northeastern,688,466,607
+Nagaland,North_Eastern_States,Northeastern,686,5,707
+Odisha,Odisha,Eastern,4238,2445,3749
+Punjab,Punjab,Northern,14145,420,12865
+Rajasthan,Rajasthan,Northern,46996,4052,50079
+Tamil Nadu,Tamil_Nadu,Southern,26291,7511,26557
+Telangana,Telangana,Southern,,,21769
+Uttar Pradesh,Uttar_Pradesh,Northern,162683,26861,138880
+Uttarakhand,HP_UK_JK,Northern,5958,1310,4850
+West Bengal,West_Bengal,Eastern,100,97.6,15429
