@@ -214,17 +214,17 @@ generated quantities {
   real<lower=0, upper=1> ppv_pri;
   
   real<lower=0, upper=1> p_under;
-  // real<lower=0> tp_pri_drug;
-  // real<lower=0> tp_pri_drug_time;
-  // real<lower=0> tp_pri_txi;
+  real<lower=0> tp_pri_drug;
+  real<lower=0> tp_pri_drug_time;
+  real<lower=0> tp_pri_txi;
   
   ppv_pub = (p_tp_bac_pub + p_tp_cdx_pub) / (p_tp_bac_pub + p_tp_cdx_pub + p_fp_bac_pub + p_fp_cdx_pub);
   ppv_eng = (p_tp_bac_eng + p_tp_cdx_eng) / (p_tp_bac_eng + p_tp_cdx_eng + p_fp_bac_eng + p_fp_cdx_eng);
   ppv_pri = (p_tp_cdx_pri) / (p_tp_cdx_pri + p_fp_cdx_pri);
   
-  // tp_pri_drug = (txi_eng * (1 - p_pri_on_pub) + txi_pri) * Pop;
-  // tp_pri_txi = (txi_eng + txi_pri) * Pop;
-  // tp_pri_drug_time = tp_pri_drug * dur_pri;
+  tp_pri_drug = Pop * r_test * (1 - p_csi_pub) * ((1 - p_csi_ppm) * p_tp_cdx_pri * p_txi_pri + p_csi_ppm * (p_tp_bac_eng + p_tp_cdx_eng) * p_txi_eng * (1 - p_pri_on_pub));
+  tp_pri_txi = Pop * r_test * (1 - p_csi_pub) * ((1 - p_csi_ppm) * p_tp_cdx_pri * p_txi_pri + p_csi_ppm * (p_tp_bac_eng + p_tp_cdx_eng) * p_txi_eng);
+  tp_pri_drug_time = tp_pri_drug * dur_pri;
   
   p_under = r_det_cdx_pri / (r_det_bac_pub + r_det_cdx_pub + r_det_bac_eng + r_det_cdx_eng + r_det_cdx_pri);
   

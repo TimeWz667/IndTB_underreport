@@ -192,14 +192,3 @@ for(model_key in c("cs_exclusive", "cs_free", "cs_independent")) {
   jsonlite::write_json(js, here::here("docs", "pars", "pars_" + glue::as_glue(model_key) + ".json"), digits = 8, auto_unbox = T)
   
 }
-
-
-
-
-
-
-
-
-
-
-
