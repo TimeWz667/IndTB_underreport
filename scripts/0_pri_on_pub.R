@@ -1,11 +1,11 @@
 library(tidyverse)
 
 
-pr_pub <- read_csv(here::here("data", "PrPublic.csv"))
-
-
-pr_pub <- pr_pub %>% 
+pr_pub <- read_csv(here::here("data", "PrPublic.csv")) %>% 
+  select(- StateGroup) %>% 
   mutate(
+    State = gsub("\\s+", "_", State),
+    State = gsub("&", "and", State),
     Pr = N_PriOnPub / N_Private,
     Var = Pr * (1 - Pr) / N_Private,
     k = ifelse(N_Private != 100, N_Txi_Pri / N_Private, NA)
@@ -68,6 +68,41 @@ pr_public_reformed <- pr_pub %>%
   ) %>%
   select(- abm, - k)
 
+pr_public_reformed
+
 
 write_csv(pr_public_reformed, here::here("data", "PrPublicPrior.csv"))
+
+
+# Reform to json file for prior inputs
+pr_pub_region <- pr_pub_agg %>% 
+  mutate(
+    Pr = Pr1,
+    Var = Var1,
+    abm = Pr * (1 - Pr) / Var - 1,
+    al = Pr * abm,
+    be = abm - al
+  )
+
+
+js <- list()
+
+sel <- pr_public_reformed[pr_public_reformed$State == "India", ]
+js[["India"]] <- list(al = sel$al, be = sel$be)
+
+for (state in pr_public_reformed$State[-1]) {
+  sel <- pr_public_reformed[pr_public_reformed$State == state, ]
+  js[[paste0("State_", state)]] <- list(al = sel$al, be = sel$be)
+}
+
+for (reg in pr_pub_region$Region) {
+  sel <- pr_pub_region[pr_pub_region$Region == reg, ]
+  js[[paste0("Region_", reg)]] <- list(al = sel$al, be = sel$be)
+}
+js
+
+jsonlite::write_json(js, here::here("data", "PrPublicPrior.json"), flatten = TRUE)
+
+
+
 

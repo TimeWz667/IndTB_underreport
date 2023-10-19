@@ -36,7 +36,7 @@ post01 %>%
 
 
 
-load(here::here("docs", "tabs", "post_subnational.rdata"))
+load(here::here("docs", "tabs", "post_state.rdata"))
 
 
 states <- post  %>% 

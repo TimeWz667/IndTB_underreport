@@ -7,6 +7,8 @@ rstan_options(auto_write = TRUE)
 
 ## Data loading
 
+pr_pub <- jsonlite::read_json(here::here("data", "PrPublicPrior.json"), simplifyVector = T)
+
 targets <- read_csv(here::here("data", "targets_india.csv"))
 
 targets %>% 
@@ -38,6 +40,8 @@ ds <- list(
   Tx_Pub = tx$X,
   Drug = drug$M,
   Drug_Std = drug$Error,
+  i_u_al = pr_pub$India$al,
+  i_u_be = pr_pub$India$be,
   ppv_pub = 0.75,
   ent_pub = 0.483,
   pdx_pub = 0.65,
@@ -48,33 +52,29 @@ ds <- list(
 
 ### Fitting ----
 
-# "cs_00.stan", "cs_10.stan", "cs_01.stan"
+src_model <- "cs_11.stan"
 
-for(src_model in c("cs_11.stan")) {
-  model <- rstan::stan_model(here::here("stan", src_model))
-  
-  post <- rstan::sampling(model, data=ds, iter=5e3, warmup=4e3)
-  
-  tab <- as.data.frame(summary(post)$summary)
-  tab$Name <- rownames(tab)
-  tab <- tab %>% as_tibble() %>% relocate(Name)
-  
-  ext <- rstan::extract(post) %>% 
-    data.frame() %>% 
-    as.tibble() %>% 
-    mutate(
-      ppv_pub = ds$ppv_pub,
-      ent_pub = ds$ent_pub,
-      pdx_pub = ds$pdx_pub
-    )
-  
-  folder <- gsub(".stan", "", src_model)
-  dir.create(here::here("out", folder), showWarnings = F)
-  write_csv(tab, file = here::here("out", folder, "summary.csv"))
-  write_csv(ext, file = here::here("out", folder, "post.csv"))
-}
+model <- rstan::stan_model(here::here("stan", src_model))
 
+post <- rstan::sampling(model, data=ds, iter=5e3, warmup=4e3)
 
+tab <- as.data.frame(summary(post)$summary)
+tab$Name <- rownames(tab)
+tab <- tab %>% as_tibble() %>% relocate(Name)
+
+ext <- rstan::extract(post) %>% 
+  data.frame() %>% 
+  as.tibble() %>% 
+  mutate(
+    ppv_pub = ds$ppv_pub,
+    ent_pub = ds$ent_pub,
+    pdx_pub = ds$pdx_pub
+  )
+
+folder <- gsub(".stan", "", src_model)
+dir.create(here::here("out", folder), showWarnings = F)
+write_csv(tab, file = here::here("out", folder, "summary.csv"))
+write_csv(ext, file = here::here("out", folder, "post.csv"))
 
 
 

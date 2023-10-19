@@ -7,6 +7,9 @@ rstan_options(auto_write = TRUE)
 
 ## Data loading
 
+pr_pub <- jsonlite::read_json(here::here("data", "PrPublicPrior.json"), simplifyVector = T)
+
+
 targets <- read_csv(here::here("data", "targets_india.csv"))
 
 targets %>% 
@@ -35,6 +38,8 @@ ds <- list(
   Tx_Pub = tx$X,
   Drug = drug$M,
   Drug_Std = drug$Error,
+  i_u_al = pr_pub$India$al,
+  i_u_be = pr_pub$India$be,
   ppv_pub = 0.75,
   dur_upper = 1
 )

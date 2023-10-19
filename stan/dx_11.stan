@@ -11,6 +11,9 @@ data {
   int<lower=0> Tx;
   int<lower=0> Tx_Pub;
   
+  real i_u_al;
+  real i_u_be;
+  
   real<lower=0.5, upper=1> ppv_pub;
   
   real<lower=0.5> dur_upper;
@@ -65,7 +68,7 @@ model {
 
   ppm ~ uniform(0.1, 1);
 
-  p_pri_on_pub ~ beta(1.5, 3.5);
+  p_pri_on_pub ~ beta(i_u_al, i_u_be);
   
   p_txi_pri ~ uniform(0.5, 0.8);
     

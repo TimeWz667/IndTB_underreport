@@ -6,6 +6,8 @@ rstan_options(auto_write = TRUE)
 
 
 ## Data loading
+pr_pub <- jsonlite::read_json(here::here("data", "PrPublicPrior.json"), simplifyVector = T)
+
 
 pop <- local({
   locs <- dir("data")
@@ -47,6 +49,8 @@ data_locs <- lapply(names(pop), function(loc) {
     filter(Index == "TxI") %>% 
     mutate(N_Txi = round(N * M))
   
+  sel <- pr_pub[["State_" + glue::as_glue(loc)]]
+  
   
   ds <- list(
     N_Txi_Pub = det$N_Txi[1],
@@ -56,6 +60,8 @@ data_locs <- lapply(names(pop), function(loc) {
     Tx_Pub = tx$X,
     Drug = drug$M,
     Drug_Std = drug$Error,
+    i_u_al = sel$al,
+    i_u_be = sel$be,
     ppv_pub = 0.75,
     dur_upper = 1
   )

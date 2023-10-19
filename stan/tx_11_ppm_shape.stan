@@ -6,6 +6,9 @@ data {
   real<lower=0> Drug;
   real<lower=0> Drug_Std;
   
+  real i_u_al;
+  real i_u_be;
+  
   int<lower=0> Tx;
   int<lower=0> Tx_Pub;
   
@@ -50,7 +53,7 @@ model {
   
   ppm ~ beta(10 * ppm_avg, 10 * (1 - ppm_avg));
 
-  p_pri_on_pub ~ beta(1.5, 3.5);
+  p_pri_on_pub ~ beta(i_u_al, i_u_be);
     
   target += binomial_lpmf(N_Txi_Pub | Pop, txi_pub / ppv_pub);
   target += binomial_lpmf(N_Txi_Eng | Pop, txi_eng / ppv_eng);
